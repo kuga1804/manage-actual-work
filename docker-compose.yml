@@ -1,0 +1,20 @@
+# NAME: Dockerのログファイル共通設定
+# DESCRIPTION: 各サービスに共通の設定を行うため、アンカー定義している
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+    compress: "true"
+
+services:
+  # 役割：フロントエンド
+  # ミドルウェア：node
+  ui-react:
+    build: ./ui
+    container_name: ui-react
+    ports:
+      - 3000:3000
+    volumes:
+      - ./ui/ui-react:/app
+    logging: *default-logging
